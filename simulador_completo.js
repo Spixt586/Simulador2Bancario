@@ -1,13 +1,11 @@
 let clientes = [];
-  let creditos = [];
-
-  let tasaInteres = 15;
-  let clienteSeleccionado = null;
-  let cuotaCalculada = 0;
-  let montoCalculado = 0;
-  let plazoCalculado = 0;
-  let creditoAprobado = false;
-
+let creditos = [];
+let tasaInteres = 15;
+let clienteSeleccionado = null;
+let cuotaCalculada = 0;
+let montoCalculado = 0;
+let plazoCalculado = 0;
+let creditoAprobado = false;
 
 //Para recuperar o mostrar información usar los métodos de la clase utilitarios, puede agregar métodos adicionales en utilitarios
 function ocultarSecciones(){
@@ -88,7 +86,8 @@ function pintarClientes(){
       "<td>" + cliente.apellido + "</td>" + 
       "<td>" + cliente.ingresos + "</td>" + 
       "<td>"+ cliente.egresos + "</td>" + 
-      "<td><button onclick=\"seleccionarCliente('" + cliente.cedula + "')\">Actualizar</button></td>" +
+      "<td><button onclick=\"seleccionarCliente('" + cliente.cedula + "')\">Actualizar</button>" +
+      "<button onclick=\"eliminarCliente('" + cliente.cedula + "')\">Eliminar</button></td>" +
     "</tr>"
   }
 }
@@ -124,4 +123,75 @@ function limpiar(){
   mostrarTextoEnCaja("ingresos", "");
   mostrarTextoEnCaja("egresos", "");
 
+}
+
+eliminarCliente = function(cedula){
+  for(let  i = 0; i < clientes.length; i++){
+    if(clientes[i].cedula == cedula){
+      clientes.splice(i,1);
+      break;
+    }
+  }
+  pintarClientes()
+}
+
+function buscarClienteCredito(){
+  let cedula = recuperaraTexto("cedula");
+  let clienteEncontrado = buscarCliente(cedula);
+    if(clienteEncontrado != null){
+
+      let cmpClienteCredito = document.getElementById("datosClienteCredito")
+      cmpClienteCredito.innerHTML = "<table><tbody>"+
+      "<tr><td>"+clienteEncontrado.cedula+"</td>"+
+      "<td>"+clienteEncontrado.nombre+"</td>"+
+      "<td>"+clienteEncontrado.apellido+"</td>"+
+      "<td>"+clienteEncontrado.ingresos+"</td>"+
+      "<td>"+clienteEncontrado.egresos+"</td>"+
+      "</tr>"+
+      "</tbody></table>"
+    }else{
+      clienteSeleccionado = null;
+      alert("Cliente no encontrado")
+      limpiar()
+    }
+}
+
+function calcularDisponible(ingresos,arriendo,alimentacion,varios){
+    let valorDisponible;
+    valorDisponible = ingresos - (arriendo+alimentacion+varios);
+    if(valorDisponible<0){
+        return "0";
+    }
+    return valorDisponible;
+}
+
+
+function calcularCapacidadPago(montoDisponible){
+    return montoDisponible*0.5;
+}
+
+function calcularInteresSimple(monto,tasa,plazo){
+    let interesAPagar;
+    interesAPagar = plazo * (tasa/100) * monto;
+    return interesAPagar;
+}
+
+function calcularTotalPagar(monto,interes){
+    let totalAPagar;
+    totalAPagar = monto + interes + 100;
+    return totalAPagar; 
+}
+
+function calcularCuotaMensual(total, plazoAnios){
+    let totalCuotaMensual;
+    totalCuotaMensual = total/(plazoAnios*12);
+    return totalCuotaMensual;
+}
+
+function aprobarCredito(capacidadPago,cuotaMensual){   
+    if(capacidadPago > cuotaMensual){
+        return true;
+    }else{
+        return false;
+    }
 }
