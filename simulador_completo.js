@@ -140,15 +140,15 @@ function buscarClienteCredito(){
   let clienteEncontrado = buscarCliente(cedula);
     if(clienteEncontrado != null){
 
+      clienteSeleccionado = clienteEncontrado
+
       let cmpClienteCredito = document.getElementById("datosClienteCredito")
-      cmpClienteCredito.innerHTML = "<table><tbody>"+
-      "<tr><td>"+clienteEncontrado.cedula+"</td>"+
-      "<td>"+clienteEncontrado.nombre+"</td>"+
-      "<td>"+clienteEncontrado.apellido+"</td>"+
-      "<td>"+clienteEncontrado.ingresos+"</td>"+
-      "<td>"+clienteEncontrado.egresos+"</td>"+
-      "</tr>"+
-      "</tbody></table>"
+      cmpClienteCredito.innerHTML =
+      "Cédula: "+clienteEncontrado.cedula+"<br>"+
+      "Nombre: "+clienteEncontrado.nombre+"<br>"+
+      "Apellido: "+clienteEncontrado.apellido+"<br>"+
+      "Ingresos: "+clienteEncontrado.ingresos+"<br>"+
+      "Egresos: "+clienteEncontrado.egresos;
     }else{
       clienteSeleccionado = null;
       alert("Cliente no encontrado")
@@ -195,3 +195,30 @@ function aprobarCredito(capacidadPago,cuotaMensual){
         return false;
     }
 }
+
+simularCredito = function(){
+  let monto = document.getElementById("montoCredito").value;
+  let floatMonto = parseFloat(monto);
+  let plazo = document.getElementById("plazoCredito").value;
+  let intPlazo = parseInt(plazo);
+  let disponible = calcularDisponible(clienteSeleccionado.ingresos,clienteSeleccionado.egresos, 0, 0);
+  let capacidadPago = calcularCapacidadPago(disponible);
+  let interes = calcularInteresSimple(floatMonto, tasaInteres, intPlazo);
+  let totalPagar = calcularTotalPagar(floatMonto, interes);
+  let cuota = calcularCuotaMensual(totalPagar, intPlazo);
+  let aprobado = aprobarCredito(capacidadPago, cuota);
+  
+  let veredicto = aprobado ? "Crédito disponible" : "El monto exede la capacidad de pago";
+
+  let divResultado = document.getElementById("resultadoCredito")
+  
+  divResultado.innerHTML = 
+  "Capacidad de pago:" + capacidadPago + "<br>"+
+  "Total a Pagar: "+totalPagar+"<br>"+
+  "Cuota mensual: " +cuota+"<br>"+
+  "RESULTADO: " +veredicto;
+
+  divResultado.className = aprobado ? "aprobado":"rechazado"
+
+    document.getElementById("btnSolicitarCredito").disabled = !aprobado;
+} 
