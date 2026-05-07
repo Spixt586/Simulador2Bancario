@@ -1,8 +1,8 @@
 let clientes = [
-  {cedula: 1748596603, nombre: "Eduardo", apellido: "Guerrero", ingresos: 1000, egresos: 800},
-  {cedula: 1712345678, nombre: "Juan", apellido: "Pérez", ingresos: 1200, egresos: 500},
-  {cedula: 1723456789, nombre: "Maria", apellido: "Gómez", ingresos: 1500, egresos: 600},
-  {cedula: 1734567890, nombre: "Carlos", apellido: "Ramirez", ingresos: 900, egresos: 350}
+  {cedula: 1748596603, nombre: "Eduardo", apellido: "Guerrero", ingresos: 1000, egresos: 800, correo: "edu.guerrero@mail.com"},
+  {cedula: 1712345678, nombre: "Juan", apellido: "Pérez", ingresos: 1200, egresos: 500, correo: "JPérez@gmail.com"},
+  {cedula: 1723456789, nombre: "Maria", apellido: "Gómez", ingresos: 1500, egresos: 600, correo: "MaríaGómez@outlook.com"},
+  {cedula: 1734567890, nombre: "Carlos", apellido: "Ramirez", ingresos: 900, egresos: 350, correo: "Car.Ram@yahoo.com"}
 ];
 let creditos = [];
 let tasaInteres = 15;
@@ -48,21 +48,33 @@ function guardarCliente(){
   let apellido = recuperaraTexto("apellido");
   let ingresos = recuperarFloat("ingresos");
   let egresos = recuperarFloat("egresos");
+  let correo = recuperaraTexto("cmpCorreo");
+  let soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/  //esto es una regla para que se valide si el nombre y apellido ingresados son si o si letras
+  let soloNumeros = /^\d+$/ //regla que se usa para que reconosca todos los dígitos del 0 aL 9 USANDO "\d" simobolos como "^" y "$" hace que valide desde el inicio hasta el fin, el signo de "+" hace que puedan haber más númerosía me
+  
+  //||VALIDACIONES||//
 
   if(!cedula || !cedula.trim()){
     alert("Debe ingresar un número de cédula válido");
   return null;
   }else if(cedula.trim().length !=10){
-    alert("El número de cédula debe tener exactamente 10 dígitos")
+    alert("El número de cédula debe tener exactamente 10 dígitos");
+    return null;
+  }else if(!soloNumeros.test(cedula)){
+    alert("La cédula solo puede contener números");
     return null;
   }
   if(!nombre.trim()){
     alert("Nombre no válido");
   return null;
+  }else if(!soloLetras.test(nombre)){
+    alert("El nombre solo puede contener letras");
   }
   if(!apellido.trim()){
     alert("Apellido no válido");
   return null;
+  }else if(!soloLetras.test(apellido)){
+    alert("El apellido solo puede contener letras")
   }
   if(isNaN(ingresos)||ingresos <= 0){
     alert("El valor ingresado no es válido");
@@ -73,6 +85,10 @@ function guardarCliente(){
     return null;
   }
 
+  if(!correo.trim()){
+    alert("Ingrese un correo válido");
+    return null;
+  }
   //Buscamos si el cliente ya existe
   let clienteExiste = buscarCliente(cedula);
 
@@ -85,7 +101,8 @@ function guardarCliente(){
     nombre: nombre,
     apellido: apellido,
     ingresos: ingresos,
-    egresos: egresos
+    egresos: egresos,
+    correo: correo
   };
 
   //agregamos el objeto al arreglo
@@ -96,6 +113,7 @@ function guardarCliente(){
     clienteExiste.apellido = apellido;
     clienteExiste.ingresos = ingresos;
     clienteExiste.egresos = egresos;
+    clienteExiste.correo = correo;
   }
 
   pintarClientes();
@@ -117,6 +135,7 @@ function pintarClientes(){
       "<td>" + cliente.apellido + "</td>" + 
       "<td>" + cliente.ingresos + "</td>" + 
       "<td>"+ cliente.egresos + "</td>" + 
+      "<td>" + cliente.correo + "</td>"+
       "<td><button onclick=\"seleccionarCliente('" + cliente.cedula + "')\">Actualizar</button>" +
       "<button onclick=\"eliminarCliente('" + cliente.cedula + "')\">Eliminar</button></td>" +
     "</tr>"
@@ -144,6 +163,7 @@ function seleccionarCliente(cedula){
   mostrarTextoEnCaja("apellido", clienteSeleccionado.apellido);
   mostrarTextoEnCaja("ingresos", clienteSeleccionado.ingresos);
   mostrarTextoEnCaja("egresos", clienteSeleccionado.egresos);
+  mostrarTextoEnCaja("cmpCorreo", clienteSeleccionado.correo)
 }
 
 //limpia las casillas donde guardamos los datos
@@ -155,7 +175,7 @@ function limpiar(){
   mostrarTextoEnCaja("apellido", "");
   mostrarTextoEnCaja("ingresos", "");
   mostrarTextoEnCaja("egresos", "");
-
+  mostrarTextoEnCaja("cmpCorreo","")
 }
 
 //eliminamos al cliente 
@@ -185,7 +205,8 @@ function buscarClienteCredito(){
       "Nombre: "+clienteEncontrado.nombre+"<br>"+
       "Apellido: "+clienteEncontrado.apellido+"<br>"+
       "Ingresos: "+clienteEncontrado.ingresos+"<br>"+
-      "Egresos: "+clienteEncontrado.egresos;
+      "Egresos: "+clienteEncontrado.egresos +"<br>"+
+      "Correo Electrónico: " +clienteEncontrado.correo + "<br>";
     }else{
       clienteSeleccionado = null;
       alert("Cliente no encontrado")

@@ -16,6 +16,7 @@
   <button onclick="mostrarSeccion(`clientes`);">Clientes</button>
   <button onclick="mostrarSeccion(`credito`)">Créditos</button>
   <button onclick="mostrarSeccion(`listaCreditos`)">Créditos Registrados</button>
+  <button onclick="mostrarSeccion(`lblcredito`)">Creado por:</button>
 </nav>
 <section id="parametros">
   <h2>Configurar Parámetros</h2>
@@ -38,6 +39,7 @@
   <input type="text" id="apellido" placeholder="Apellido">
   <input type="number" id="ingresos" placeholder="Ingresos">
   <input type="number" id="egresos" placeholder="Egresos">
+  <input type="text" id="cmpCorreo" placeholder="Correo Electrónico">
 
   <br>
 
@@ -52,6 +54,7 @@
         <th>Apellido</th>
         <th>Ingresos</th>
         <th>Egresos</th>
+        <th>Correo</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -62,6 +65,7 @@
           <td>Guerrero</td>
           <td>1000</td>
           <td>800</td>
+
           <td>
             <button>Actualizar</button>
             <button>Eliminar</button>
@@ -73,6 +77,7 @@
           <td>Pérez</td>
           <td>1200</td>
           <td>500</td>
+          <td>JPérez@gmail.com</td>
           <td>
             <button>Actualizar</button>
             <button>Eliminar</button>
@@ -84,6 +89,7 @@
           <td>Gómez</td>
           <td>1500</td>
           <td>600</td>
+          <td>MaríaGómez@outlook.com</td>
           <td>
             <button>Actualizar</button>
             <button>Eliminar</button>
@@ -95,6 +101,7 @@
           <td>Ramírez</td>
           <td>900</td>
           <td>350</td>
+          <td>Car.Ram@yahoo.com</td>
           <td>
             <button>Actualizar</button>
             <button>Eliminar</button>
@@ -146,6 +153,16 @@
       </tr>
     </thead>
     <tbody id="tablaCreditos">
+        <tr>
+          <td>1748596603</td>
+          <td>Eduardo</td>
+          <td>Guerrero</td>
+          <td>2500</td>
+          <td>14%</td>
+          <td>18 meses</td>
+          <td>41.20</td>
+          <td><button>Eliminar</button></td>
+        </tr>
        <tr>
           <td>1712345678</td>
           <td>Juan</td>
@@ -178,6 +195,11 @@
         </tr>
     </tbody>
   </table>
+</section>
+
+<section id="lblcredito">
+  <p>Desarrollado por: Oscar Josue Tipanluisa Cevallos</p>
+
 </section>
 
 <script src="simulador_completo.js"></script>
