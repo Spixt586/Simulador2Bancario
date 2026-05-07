@@ -1,5 +1,9 @@
 let clientes = [
-  {cedula: 1748596603, nombre: "Eduardo", apellido: "Guerrero", ingresos: 1000, egresos: 800}];
+  {cedula: 1748596603, nombre: "Eduardo", apellido: "Guerrero", ingresos: 1000, egresos: 800},
+  {cedula: 1712345678, nombre: "Juan", apellido: "Pérez", ingresos: 1200, egresos: 500},
+  {cedula: 1723456789, nombre: "Maria", apellido: "Gómez", ingresos: 1500, egresos: 600},
+  {cedula: 1734567890, nombre: "Carlos", apellido: "Ramirez", ingresos: 900, egresos: 350}
+];
 let creditos = [];
 let tasaInteres = 15;
 let clienteSeleccionado = null;
@@ -37,12 +41,37 @@ function guardarTasa(){
   }
 }
 function guardarCliente(){
+  
   //obtetener datos de formulario utilizando utilitarios
   let cedula = recuperaraTexto("cedula");
   let nombre  = recuperaraTexto("nombre");
   let apellido = recuperaraTexto("apellido");
   let ingresos = recuperarFloat("ingresos");
   let egresos = recuperarFloat("egresos");
+
+  if(!cedula || !cedula.trim()){
+    alert("Debe ingresar un número de cédula válido");
+  return null;
+  }else if(cedula.trim().length !=10){
+    alert("El número de cédula debe tener exactamente 10 dígitos")
+    return null;
+  }
+  if(!nombre.trim()){
+    alert("Nombre no válido");
+  return null;
+  }
+  if(!apellido.trim()){
+    alert("Apellido no válido");
+  return null;
+  }
+  if(isNaN(ingresos)||ingresos <= 0){
+    alert("El valor ingresado no es válido");
+    return null
+  }
+  if(isNaN(egresos)||egresos <= 0){
+    alert("El valor ingresado no es válido");
+    return null;
+  }
 
   //Buscamos si el cliente ya existe
   let clienteExiste = buscarCliente(cedula);
@@ -251,6 +280,13 @@ solicitarCredito = function(){
 
 function  buscarCreditos(cedula){
   let creditosCliente = [];
+   if(!cedula || !cedula.trim()){
+    alert("Debe ingresar un número de cédula válido");
+  return null;
+  }else if(cedula.trim().length !=10){
+    alert("El número de cédula debe tener exactamente 10 dígitos")
+    return null;
+  }
   for(let i = 0; i < creditos.length; i++){
     let credito = creditos[i];
   if(credito.cedula == cedula){
@@ -272,7 +308,7 @@ function pintarCreditos(creditos){
           <td>${credito.monto}</td>
           <td>${credito.tasa}</td>
           <td>${credito.plazo}</td>
-          <td>${credito.cuota}</td>
+          <td>${credito.cuota.toFixed(2)}</td>
           <td><button onclick = "eliminarCredito(${credito.cedula})">Eliminar</button></td>
         </tr>`
   }
