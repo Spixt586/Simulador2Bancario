@@ -16,7 +16,8 @@
   <button onclick="mostrarSeccion(`clientes`);">Clientes</button>
   <button onclick="mostrarSeccion(`credito`)">Créditos</button>
   <button onclick="mostrarSeccion(`listaCreditos`)">Créditos Registrados</button>
-  <button onclick="mostrarSeccion(`lblcredito`)">Creado por:</button>
+  <button onclick="mostrarSeccion(`listaContactos`)">Contactos</button>
+  <button onclick="mostrarSeccion(`acercaDe`)">Acerca De:</button>
 </nav>
 <section id="parametros">
   <h2>Configurar Parámetros</h2>
@@ -27,8 +28,15 @@
 
   <br>
   <button onclick="guardarTasa();">Guardar tasa</button>
+  <br>
+  <label>Monto máximo</label>
+  <input type="number" id="montoMax" min = "2000" max="30000" value ="2300">
+  <br>
+  <button onclick ="guardarMontoMax();">Guardar Monto</button>
+  <button onclick= "borrarMonto();">Borrar</button>
 
   <p id="mensajeTasa"></p>
+  <p id="mensajeMonto"></p>
 </section>
 
 <section id="clientes">
@@ -37,6 +45,7 @@
   <input type="text" id="cedula" placeholder="Cédula">
   <input type="text" id="nombre" placeholder="Nombre">
   <input type="text" id="apellido" placeholder="Apellido">
+  <input type="text" id="telefono" placeholder="Telefono"> 
   <input type="number" id="ingresos" placeholder="Ingresos">
   <input type="number" id="egresos" placeholder="Egresos">
   <input type="text" id="cmpCorreo" placeholder="Correo Electrónico">
@@ -52,6 +61,7 @@
         <th>Cédula</th>
         <th>Nombre</th>
         <th>Apellido</th>
+        <th>Teléfono</th>
         <th>Ingresos</th>
         <th>Egresos</th>
         <th>Correo</th>
@@ -63,9 +73,10 @@
           <td>1748596603</td>
           <td>Eduardo</td>
           <td>Guerrero</td>
+          <td>096758876</td>
           <td>1000</td>
           <td>800</td>
-
+          <td>edu.guerrero@mail.com</td>
           <td>
             <button>Actualizar</button>
             <button>Eliminar</button>
@@ -75,6 +86,7 @@
           <td>1712345678</td>
           <td>Juan</td>
           <td>Pérez</td>
+          <td>096758877</td>
           <td>1200</td>
           <td>500</td>
           <td>JPérez@gmail.com</td>
@@ -87,6 +99,7 @@
           <td>1723456789</td>
           <td>María</td>
           <td>Gómez</td>
+          <td>096758878</td>
           <td>1500</td>
           <td>600</td>
           <td>MaríaGómez@outlook.com</td>
@@ -99,6 +112,7 @@
           <td>1734567890</td>
           <td>Carlos</td>
           <td>Ramírez</td>
+          <td>096758879</td>
           <td>900</td>
           <td>350</td>
           <td>Car.Ram@yahoo.com</td>
@@ -107,6 +121,71 @@
             <button>Eliminar</button>
           </td>
         </tr>
+        <tr>
+  <td>1701234567</td>
+  <td>Carlos</td>
+  <td>Mendoza</td>
+  <td>0991234567</td>
+  <td>8500</td>
+  <td>3200</td>
+  <td>carlos.mendoza@gmail.com</td>
+  <td>
+    <button>Actualizar</button>
+    <button>Eliminar</button>
+  </td>
+</tr>
+<tr>
+  <td>1756789012</td>
+  <td>Ana</td>
+  <td>Paredes</td>
+  <td>0982345678</td>
+  <td>12000</td>
+  <td>4500</td>
+  <td>ana.paredes@hotmail.com</td>
+  <td>
+    <button>Actualizar</button>
+    <button>Eliminar</button>
+  </td>
+</tr>
+<tr>
+  <td>1709876543</td>
+  <td>Luis</td>
+  <td>Carrillo</td>
+  <td>0973456789</td>
+  <td>3200</td>
+  <td>1800</td>
+  <td>luis.carrillo@gmail.com</td>
+  <td>
+    <button>Actualizar</button>
+    <button>Eliminar</button>
+  </td>
+</tr>
+<tr>
+  <td>1798765432</td>
+  <td>María</td>
+  <td>Sánchez</td>
+  <td>0964567890</td>
+  <td>15000</td>
+  <td>6000</td>
+  <td>maria.sanchez@yahoo.com</td>
+  <td>
+    <button>Actualizar</button>
+    <button>Eliminar</button>
+  </td>
+</tr>
+<tr>
+  <td>1745678901</td>
+  <td>Jorge</td>
+  <td>Villacís</td>
+  <td>0955678901</td>
+  <td>9800</td>
+  <td>2100</td>
+  <td>jorge.villacis@gmail.com</td>
+  <td>
+    <button>Actualizar</button>
+    <button>Eliminar</button>
+  </td>
+</tr>
     </tbody>
   </table>
 </section>
@@ -139,6 +218,7 @@
   <input type="text" id="buscarCedulaListado" placeholder="Ingresar cédula">
   <button onclick="buscarCreditosCliente()">Buscar</button>
   <button onclick="pintarCreditos(creditos)">Ver todos</button>
+  <button onclick="creditosVIP()">Créditos VIP</button>
 
   <table>
     <thead>
@@ -150,6 +230,7 @@
         <th>Tasa</th>
         <th>Plazo</th>
         <th>Cuota</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody id="tablaCreditos">
@@ -163,7 +244,7 @@
           <td>41.20</td>
           <td><button>Eliminar</button></td>
         </tr>
-       <tr>
+        <tr>
           <td>1712345678</td>
           <td>Juan</td>
           <td>Pérez</td>
@@ -193,13 +274,108 @@
           <td>290.00</td>
           <td><button>Eliminar</button></td>
         </tr>
+        <tr>
+          <td>1701234567</td>
+          <td>Carlos</td>
+          <td>Mendoza</td>
+          <td>5300</td>
+          <td>15%</td>
+          <td>18 meses</td>
+          <td>320.75</td>
+          <td><button>Eliminar</button></td>
+        </tr>
+        <tr>
+          <td>1756789012</td>
+          <td>Ana</td>
+          <td>Paredes</td>
+          <td>7500</td>
+          <td>14%</td>
+          <td>24 meses</td>
+          <td>356.25</td>
+          <td><button>Eliminar</button></td>
+        </tr>
+        <tr>
+          <td>1709876543</td>
+          <td>Luis</td>
+          <td>Carrillo</td>
+          <td>1400</td>
+          <td>16%</td>
+          <td>6 meses</td>
+          <td>271.33</td>
+          <td><button>Eliminar</button></td>
+        </tr>
+        <tr>
+          <td>1798765432</td>
+          <td>María</td>
+          <td>Sánchez</td>
+          <td>9000</td>
+          <td>15%</td>
+          <td>24 meses</td>
+          <td>418.75</td>
+          <td><button>Eliminar</button></td>
+        </tr>
+        <tr>
+          <td>1745678901</td>
+          <td>Jorge</td>
+          <td>Villacís</td>
+          <td>7700</td>
+          <td>14%</td>
+          <td>18 meses</td>
+          <td>465.28</td>
+          <td><button>Eliminar</button></td>
+        </tr>
     </tbody>
   </table>
+
+  <h2>Créditos VIP</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Cédula</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Teléfono</th>
+        <th>Ingresos</th>
+        <th>Egresos</th>
+        <th>Correo</th>
+        <th>Crédito</th>
+      </tr>
+    </thead>
+    <tbody id="tablaVIP"></tbody>
+  </table>
+
 </section>
 
-<section id="lblcredito">
+<section id="listaContactos">
+  <h2>Contactos</h2>
+  <input type="text" id ="buscarContactos" placeholder="Buscar Contactos">
+  <button onclick="pintarContactos(listaContactos)">Mostrar Todo</button>
+  <button onclick="buscarContactos('nombre')">Buscar por Nombre</button>
+  <button onclick="buscarContactos('numero')">Buscar por Número</button>
+  <button onclick = "ordenarContactos()">Ordenar por Nombre</button>
+  <table>
+    <thead>
+      <th>Nombre</th>
+      <th>Número</th>
+    </thead>
+    <tbody id = "tablaContactos">
+      
+    </tbody>
+  </table>
   <p>Desarrollado por: Oscar Josue Tipanluisa Cevallos</p>
 
+</section>
+
+<section id="acercaDe">
+  <p><em>Nombre: </em>Josue</p><br>
+  <p><em>Carrera: </em>Desarrollo de Software</p><br>
+  <p><em>Redes Sociales: </em><br><a href="https://www.tiktok.com/@spixt583">tiktok</a><br><a href="https://www.facebook.com/profile.php?id=61582061692641">facebook</a></p><br>
+  <p><em>Foto: </em></p><br>
+  <img src="Spider-Cat.jpg" width="350px" height="400px"><br>
+  <p><em>Información Reelevante:</em><br>
+  solo para llenar este campo porque no se me ocure información reelevante voy a poner 1 hobie que tengo y mi cumpleaños <br>
+  se tocar la guitarrabr <br>
+  cumplo años el 19 de septiembre</p>
 </section>
 
 <script src="simulador_completo.js"></script>
